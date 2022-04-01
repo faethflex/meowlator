@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import './App.css';
 
-const morse = { 
-  'a': '.-',    'b': '-...',  'c': '-.-.', 'd': '-..',
-  'e': '.',     'f': '..-.',  'g': '--.',  'h': '....',
-  'i': '..',    'j': '.---',  'k': '-.-',  'l': '.-..',
-  'm': '--',    'n': '-.',    'o': '---',  'p': '.--.',
-  'q': '--.-',  'r': '.-.',   's': '...',  't': '-',
-  'u': '..-',   'v': '...-',  'w': '.--',  'x': '-..-',
-  'y': '-.--',  'z': '--..',
-  '1': '.----', '2': '..---', '3': '...--', '4': '....-', 
-  '5': '.....', '6': '-....', '7': '--...', '8': '---..', 
-  '9': '----.', '0': '-----', 
+const morse = {
+  'a': '.-', 'b': '-...', 'c': '-.-.', 'd': '-..',
+  'e': '.', 'f': '..-.', 'g': '--.', 'h': '....',
+  'i': '..', 'j': '.---', 'k': '-.-', 'l': '.-..',
+  'm': '--', 'n': '-.', 'o': '---', 'p': '.--.',
+  'q': '--.-', 'r': '.-.', 's': '...', 't': '-',
+  'u': '..-', 'v': '...-', 'w': '.--', 'x': '-..-',
+  'y': '-.--', 'z': '--..',
+  '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+  '5': '.....', '6': '-....', '7': '--...', '8': '---..',
+  '9': '----.', '0': '-----',
   '.': '.-.-.-',
   ',': '--..--',
   '?': '..--..',
@@ -36,24 +36,24 @@ const morse = {
 
 const morseReversed = Object.fromEntries(Object.entries(morse).map(([k, v]) => [v, k]));
 
-function isFrank(input) {
-  return /^[frank FRANK]+$/.test(input);
+function isMeow(input) {
+  return /^[meow MEOW]+$/.test(input);
 }
 
-function toFrank(english) {
+function toMeow(english) {
   return english
     .split('')
     .map((c) => morse[c.toLowerCase()] || '')
     .join(' ')
-    .replace(/\./g, 'frank')
-    .replace(/-/g, 'FRANK')
+    .replace(/\./g, 'meow')
+    .replace(/-/g, 'MEOW')
     .replace(/ +/g, ' ');
 }
 
-function toEnglish(frank) {
-  return frank
-    .replace(/frank/g, '.')
-    .replace(/FRANK/g, '-')
+function toEnglish(meow) {
+  return meow
+    .replace(/meow/g, '.')
+    .replace(/MEOW/g, '-')
     .split(' ')
     .map((w) => morseReversed[w] || '')
     .join('')
@@ -62,19 +62,19 @@ function toEnglish(frank) {
 
 function App() {
   const [englishText, setEnglishText] = useState("");
-  const [frankText, setFrankText] = useState("");
+  const [meowText, setMeowText] = useState("");
 
   const handleEnglishChange = e => {
     const value = e.target.value.toLowerCase();
     if (value && !morse[value.substr(-1)]) return false;
     setEnglishText(value);
-    setFrankText(toFrank(value));
+    setMeowText(toMeow(value));
   };
 
-  const handleFrankChange = e => {
+  const handleMeowChange = e => {
     const value = e.target.value.replace(/(\r\n|\n|\r)/gm, "");
-    if (value && !isFrank(value)) return false;
-    setFrankText(value);
+    if (value && !isMeow(value)) return false;
+    setMeowText(value);
     setEnglishText(toEnglish(value));
   };
 
@@ -86,9 +86,9 @@ function App() {
         placeholder="???"
       />
       <textarea
-        onChange={handleFrankChange}
-        value={frankText}
-        placeholder="frank"
+        onChange={handleMeowChange}
+        value={meowText}
+        placeholder="meow"
       />
     </>
   );
